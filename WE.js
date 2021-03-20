@@ -14,13 +14,12 @@ function setup(){
   strokeWeight(3);
   explode_animation.frameDelay = 10; // la rapidité
 	textFont("Comic Sans MS");  
-	background(128);
 }
 
 function preload(){
   //charger images et son pour le mini jeu
-  let explode_sprite_sheet = loadSpriteSheet('/Assets/WE/900x400/Vacancelle1.png', Xsize, Ysize, 60);
-  explode_animation = loadAnimation(explode_sprite_sheet);
+  //let explode_sprite_sheet = loadSpriteSheet('/Assets/WE/900x400/Vacancelle1.png', Xsize, Ysize, 60);
+  explode_animation = loadAnimation('/Assets/WE/900x400/Vacancelle1.png','/Assets/WE/900x400/Vacancelle2.png');
 }
 
 function keyPressed() {
@@ -31,7 +30,7 @@ function keyPressed() {
 function draw(){
     frameRate(60);
     // Set the background color 
-    background(220); 
+    background(0); 
     animation(explode_animation, 450, 200);
     
     strokeWeight(4);
@@ -67,6 +66,10 @@ function draw(){
           touche = 0;
           compt=0;
         }
+    }
+    if (tic==1800){
+      text("bon ok c'est chiant, vas y, fuis!", 300, 300);
+      exit();
     }
     
 }
