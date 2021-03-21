@@ -23,24 +23,24 @@ function setup(){
   inp.input(myInputEvent);
 	inp.position(300, 300);
 	background(128);
-  image(fond, 900, 400);
-  image(reso_1, 700, 300);
-  image(reso_2, 800, 350);
-  image(reso_3l, 900, 400);
-  image(reso_3w, 900, 400);
-  image(win, 900, 400);
-  image(loose, 900, 400);
+  begin.play();
+  ost.play();
 }
 
 function preload(){
   fond = loadImage('/Assets/Mercredi/900x400/Enigme_Avec_Texte.png');
   reso_1 = loadImage('/Assets/Mercredi/900x400/Reso_1.png');
   reso_2 = loadImage('/Assets/Mercredi/900x400/Reso_2.png');
-  reso_3l = loadImage('/Assets/Mercredi/900x400/Reso_3_Loose.png');
-  reso_3w = loadImage('/Assets/Mercredi/900x400/Reso_3_Win.png');
-  win = loadImage('/Assets/Mercredi/900x400/Enigme_win.png');
-  loose = loadImage('/Assets/Mercredi/900x400/Enigme_loose.png');
+  reso_3l = loadImage('/assets/Mercredi/900x400/Reso_3_Loose.png');
+  reso_3w = loadImage('/assets/Mercredi/900x400/Reso_3_Win.png');
+  win = loadImage('/assets/Mercredi/900x400/Enigme_win.png');
+  loose = loadImage('/assets/Mercredi/900x400/Enigme_loose.png');
   
+  res = loadSound('/Sons/Mercredi/Resolution_Enigme.wav');
+  res_w = loadSound('/Sons/Mercredi/Resolution_Enigme_Win.wav');
+  res_l = loadSound('/Sons/Mercredi/Resolution_Enigme_Loose.wav');
+  ost = loadSound('/Sons/Mercredi/OST_Enigme_professeur-layton-et-letrange-village-ost-05-puzzle.mp3');
+  begin = loadSound('/Sons/Mercredi/Entree_Enigme.wav');
 }
 
 function keyPressed() {
@@ -68,9 +68,13 @@ function draw(){
     text("DEFAITE!!!", 300, 220);
     exit();
   }
-
+  if (alerte == 1){
+    res.play();
+  }
+    
 
   if (valid == true){
+    alerte++;
     compt++;
     if (compt < 240){
       image(reso_1, 100, 150);
@@ -82,10 +86,12 @@ function draw(){
     }
     if (compt >= 480 && compt < 720 && inp.value() == "0%"){//bonne réponse
       image(reso_3w, 0, 0);
+      res_w.play();
       compt++;
     }
     if (compt >= 480 && compt < 720 && inp.value() != "0%"){//mauvaise réponse
-      image(reso_3w, 0, 0);
+      image(reso_3l, 0, 0);
+      res_l.play();
       compt++;   
       faux = 1;
     }
@@ -100,8 +106,11 @@ function draw(){
     if (compt == 960){
       compt = 0;
       test++;
+      valid = false;
+      alerte = 0;
     }
-    valid = false;
+    
+
   }
     
 
