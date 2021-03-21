@@ -7,6 +7,12 @@ let score_belin = 0;
 let score_train = 0;
 let compt = 0;
 let stop = 0;
+let n = 0;
+var belin;
+var train;
+var balledm;
+var balletp;
+var fond;
 
 let ball = {
   x: 300,
@@ -17,7 +23,15 @@ let ball = {
     y: 0
   },
   draw: function() {
-    ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
+    if (n == 1){
+      image(balledm,this.x,this.y,this.radius * 2, this.radius * 2);
+      n = 0;
+    }else{
+      image(balletp,this.x,this.y,this.radius * 2, this.radius * 2);
+      n++;
+    }
+    
+    
   },
   reset: function() {
     this.x = width / 2;
@@ -39,7 +53,9 @@ let player1 = {
     this.y = min(height, max(y, 0));
   },
   draw: function() {
-    line(this.x, this.y - this.radius, this.x, this.y + this.radius);
+    //line(this.x, this.y - this.radius, this.x, this.y + this.radius);
+    animation(belin, this.x, this.y - this.radius);
+    play();
   }
 }
 
@@ -54,16 +70,33 @@ let player2 = {
     this.y = min(height, max(y, 0));
   },
   draw: function() {
-    line(this.x, this.y - this.radius, this.x, this.y + this.radius);
+    //line(this.x, this.y - this.radius, this.x, this.y + this.radius);
+    animation(belin, this.x, this.y - this.radius);
+    play();
   }
 }
 
 function setup() {
   createCanvas(900, 400);
   stroke(255);
-  fill(255);
+  fill(0);
 
   game.reset();
+  //animation(belin, 142, 64);
+  //animation(train, 320, 96);
+  image(balledm, 10, 10);
+  image(balletp, 10, 10);
+  image(fond, 900, 400);
+}
+
+function preload(){
+  //une seule image pour les 2 sprites des players, loadanimation correspond pas
+  //belin = loadAnimation('/Assets/Vendredi/900x400/Belin_Walking_Shadow.png');
+  //train = loadAnimation('/Assets/Vendredi/900x400/Togetrain_Shadow.png');
+
+  balledm = loadImage('/Assets/Vendredi/900x400/BalleDM.png');  
+  balletp = loadImage('/Assets/Vendredi/900x400/BalleTP.png');
+  fond = loadImage('/Assets/Vendredi/900x400/Background_with_borders.png');
 }
 
 let game = {
@@ -99,6 +132,7 @@ let game = {
           // player misses the ball
           this.over = true;
           score_belin++;
+          n++;
         }
       }
       
@@ -119,6 +153,7 @@ let game = {
           // player misses the ball
           this.over = true;
           score_train++;
+          n++;
         }
       }
     }
@@ -134,12 +169,13 @@ let game = {
 
 function draw() {
   frameRate(60);
+  image(fond, 900, 400);
   if(game.over === false){
     background(0);
   } else {
     background(255,0,0);
   }
-    text(score_belin + "  VS  " + score_train, 300, 300);
+  text(score_belin + "  VS  " + score_train, 300, 300);
   
   player1.position(mouseY);
   player1.draw();
@@ -169,14 +205,14 @@ function draw() {
   player2.draw();
 
   game.tick();
-  if (score_train == 5){
+  if (score_train == 10){
     background(0);
-    text("DEFAITE, peut être que jeter des DM sur le train n'est pas la solution...", 300, 200);
+    text("DEFAITE, peut être que jeter des sujets sur le train n'est pas la solution...", 300, 200);
     exit();
   }
-  if (score_belin == 10) {
+  if (score_belin == 5) {
     background(0);
-    text("VICTOIRE, apparament taper sur le train à coup de DMs était bien la bonne solution!", 300, 200);
+    text("VICTOIRE, apparament taper sur le train à coup de sujets était bien la bonne solution!", 300, 200);
     exit();
   }
 }

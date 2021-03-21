@@ -8,17 +8,17 @@ var ref = 300;
 
 function setup(){
   let chrono = createCanvas(900, 400)
-	chrono.parent("canva");	//sélectionner la div où sera le jeu
+	chrono.parent("canva");
   frameRate(60);
   smooth();
   strokeWeight(3);
   explode_animation.frameDelay = 10; // la rapidité
 	textFont("Comic Sans MS");  
+  animation(explode_animation, 900, 400);
 }
 
 function preload(){
   //charger images et son pour le mini jeu
-  //let explode_sprite_sheet = loadSpriteSheet('/Assets/WE/900x400/Vacancelle1.png', Xsize, Ysize, 60);
   explode_animation = loadAnimation('/Assets/WE/900x400/Vacancelle1.png','/Assets/WE/900x400/Vacancelle2.png');
 }
 
@@ -32,7 +32,7 @@ function draw(){
     // Set the background color 
     background(0); 
     animation(explode_animation, 450, 200);
-    
+    play();
     strokeWeight(4);
     fill(55, 37, 84, 0);
     rect(10, 10, 80, 40);

@@ -17,12 +17,12 @@ function setup(){
   inp.input(myInputEvent);
 	inp.position(300, 300);
 	background(128);
-
+  image(img, 900, 400);
 	
 }
 function preload(){
-  //img = loadImage('/Assets/Mercredi/900x400/Enigme.png', réussite, echec);
-  //img = loadImage('Enigme.png');
+  img = loadImage('/Assets/Mercredi/900x400/Enigme.png', réussite, echec);
+  
 }
 
 function keyPressed() {
@@ -48,7 +48,7 @@ function draw(){
   frameRate(60);
 	background(0);
 	textAlign(LEFT,BASELINE);
-  //image(img,0,0,900,400);
+  image(img,0,0,900,400);
   fill("red"); 
   text(keyCode, 160, 110);
   text(test, 160, 330);
@@ -64,9 +64,10 @@ function draw(){
     faux = 0;
   }
 
-  if (faux == 1){
+  if (faux == 1){//mauvaise réponse
     compt++;
     text("mauvaise réponse, penses mieux!", 600, 220);
+
   }
 
   if (valid == true && faux == 0){
