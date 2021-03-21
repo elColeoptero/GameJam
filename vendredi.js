@@ -94,9 +94,16 @@ function preload(){
   //belin = loadAnimation('/Assets/Vendredi/900x400/Belin_Walking_Shadow.png');
   //train = loadAnimation('/Assets/Vendredi/900x400/Togetrain_Shadow.png');
 
-  balledm = loadImage('/Assets/Vendredi/900x400/BalleDM.png');  
-  balletp = loadImage('/Assets/Vendredi/900x400/BalleTP.png');
-  fond = loadImage('/Assets/Vendredi/900x400/Background_with_borders.png');
+  balledm = loadImage('/assets/Vendredi/900x400/BalleDM.png');  
+  balletp = loadImage('/assets/Vendredi/900x400/BalleTP.png');
+  fond = loadImage('/assets/Vendredi/900x400/Background_with_borders.png');
+
+  //load des sons
+  bonus = loadSound("assets/sons/Point_Gagne.wav");
+  malus = loadSound("assets/sons/Point_Perdu.wav");
+  victoire = loadSound("assets/sons/Win.wav");
+  musique = loadSound("assets/sons/Son_Combat.mp3");
+  rebond = loadSound("assets/sons/Ball.wav");
 }
 
 let game = {
@@ -112,6 +119,7 @@ let game = {
       // y: keep ball inside of vertical bounds
       if (ball.y < 10 || ball.y > height - 10) {
         ball.speed.y *= -1;
+        rebond.play();
       }
       ball.y += ball.speed.y;
 
@@ -127,11 +135,14 @@ let game = {
           let angle = ball.y - player2.y;
           ball.speed.y = angle / 9;
           ball.speed.x = -2*map(abs(angle), 0, player2.radius, 3, 9);
+          rebond.play();
 
         } else {
           // player misses the ball
           this.over = true;
           score_belin++;
+          rebond.play();
+          bonus.play();
           n++;
         }
       }
@@ -153,6 +164,8 @@ let game = {
           // player misses the ball
           this.over = true;
           score_train++;
+          rebond.play();
+          malus.play();
           n++;
         }
       }
@@ -213,6 +226,7 @@ function draw() {
   if (score_belin == 5) {
     background(0);
     text("VICTOIRE, apparament taper sur le train à coup de sujets était bien la bonne solution!", 300, 200);
+    victoire.play();
     exit();
   }
 }

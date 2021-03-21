@@ -2,7 +2,13 @@ var LONG = 900;
 var LARG = 400;
 var valid = false;
 var test = 0;
-let img;
+var img;
+var reso_1;
+var reso_2;
+var reso_3l;
+var reso_3w;
+var win;
+var loose;
 let compt = 0;
 let faux = 0;
 
@@ -17,11 +23,23 @@ function setup(){
   inp.input(myInputEvent);
 	inp.position(300, 300);
 	background(128);
-  image(img, 900, 400);
-	
+  image(fond, 900, 400);
+  image(reso_1, 700, 300);
+  image(reso_2, 800, 350);
+  image(reso_3l, 900, 400);
+  image(reso_3w, 900, 400);
+  image(win, 900, 400);
+  image(loose, 900, 400);
 }
+
 function preload(){
-  img = loadImage('/Assets/Mercredi/900x400/Enigme.png', réussite, echec);
+  fond = loadImage('/Assets/Mercredi/900x400/Enigme_Avec_Texte.png');
+  reso_1 = loadImage('/Assets/Mercredi/900x400/Reso_1.png');
+  reso_2 = loadImage('/Assets/Mercredi/900x400/Reso_2.png');
+  reso_3l = loadImage('/Assets/Mercredi/900x400/Reso_3_Loose.png');
+  reso_3w = loadImage('/Assets/Mercredi/900x400/Reso_3_Win.png');
+  win = loadImage('/Assets/Mercredi/900x400/Enigme_win.png');
+  loose = loadImage('/Assets/Mercredi/900x400/Enigme_loose.png');
   
 }
 
@@ -33,14 +51,6 @@ function keyPressed() {
 
 function myInputEvent(){
 	console.log("salut");
-
-}
-
-
-function echec(){
-	background(255);
-	textAlign(LEFT,BASELINE);
-  text("echec", 300, 200);
 
 }
 
@@ -59,25 +69,37 @@ function draw(){
     exit();
   }
 
-  if (compt == 120){
-    compt = 0;
-    faux = 0;
-  }
 
-  if (faux == 1){//mauvaise réponse
+  if (valid == true){
     compt++;
-    text("mauvaise réponse, penses mieux!", 600, 220);
-
-  }
-
-  if (valid == true && faux == 0){
-    if (inp.value() == "0%"){//bonne réponse
-      text("VICTOIRE!!!", 300, 220);
-      exit();
-    }else{
-      test++;
+    if (compt < 240){
+      image(reso_1, 100, 150);
+      compt++;
+    }
+    if (compt >= 240 && compt < 480 ){
+      image(reso_2, 50, 125);
+      compt++;
+    }
+    if (compt >= 480 && compt < 720 && inp.value() == "0%"){//bonne réponse
+      image(reso_3w, 0, 0);
+      compt++;
+    }
+    if (compt >= 480 && compt < 720 && inp.value() != "0%"){//mauvaise réponse
+      image(reso_3w, 0, 0);
+      compt++;   
       faux = 1;
-      
+    }
+    if (compt >= 720 && faux == 0){
+      image(loose, 0, 0);
+      compt = 0;
+    }
+    if (compt >= 720 && faux == 1){
+      image(win, 0, 0);
+      exit();
+    }
+    if (compt == 960){
+      compt = 0;
+      test++;
     }
     valid = false;
   }
