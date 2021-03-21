@@ -6,3 +6,5 @@ Jeu réalisé pour la GameJam p5.js organisé par Baptiste Delquignies ayant pou
 - SAINT-OMER Samuel (Développeur)
 - BLET Valentin (Développeur)
 - LEVEQUE Alexandre (Artiste/Effet sonore)
+
+Lien : http://gamejam2i.go.yo.fr/
