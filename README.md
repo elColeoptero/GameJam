@@ -1,4 +1,4 @@
-# GameJam
+# p5.js GameJam : "Belin's Quest"
 
 Jeu réalisé pour la GameJam p5.js organisé par Baptiste Delquignies ayant pour thème "Bon appétit!"
 
